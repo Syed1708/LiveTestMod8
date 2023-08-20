@@ -1,0 +1,113 @@
+// Name: SYED NUMAN AHMED
+//Mobile No: 01770466498
+// Mastering Vue JS
+// Live Coding Test MODULE 8
+
+// Inside app.vue
+// Create component as ParentComponent.vue
+// Create componet as ChildComponent.vue
+// Add Tailwind css inside index.html
+<script setup>
+
+import {reactive, ref} from 'vue'
+import ParentComponent from './components/ParentComponent.vue'
+
+const person = reactive({
+  name : 'Jone Doe',
+  age : 50,
+  occupation : 'Web Devolopper',
+})
+
+
+
+
+</script>
+
+<template>
+
+<div class="mx-auto container">
+        <div class="bg-white dark:bg-gray-900">
+
+            <h1 class="p-1 mb-10">Component Model</h1>
+            <div>
+              <h3 class="mb-4">Parent</h3>
+
+              
+             <span>My name is </span><span class="bg-red-500 p-2 rounded pl-2 ">{{ person.name }}</span>  
+             
+            </div>
+        
+          </div>
+
+
+        <ParentComponent :person="person"/> 
+
+
+  </div>
+ 
+</template>
+
+<style scoped>
+
+</style>
+
+
+// Inside ParentComponent.vue
+
+<script setup>
+import ChildComponent from './ChildComponent.vue';
+defineProps(['person'])
+</script>
+
+<template>
+    <div>
+        <h2 class="mb-4 p-4">Child</h2>
+      <span> My Name is</span> <span class="bg-red-500 p-2 rounded pl-2 mb-10">{{ person.name }}</span>  
+            
+        <div class="flex flex-col text-center">
+
+            <h2 class="mb-4 mt-5">Modify in Child  Component</h2>
+            <ChildComponent v-model="person.name" label="Name"/>
+        </div>
+
+    </div>
+
+    
+</template>
+
+<style scoped>
+
+</style>
+
+// Last inside ChildComponent.vue
+
+<script setup>
+defineProps(['modelValue', 'label'])
+const emit = defineEmits(['update:modelValue'])
+
+
+
+const updateModelValue= (value) =>{
+    emit('update:modelValue', value)
+}
+</script>
+
+<template>
+    <div>
+        
+            <label for="name">{{label}}</label>
+            <input type="text" id="name" 
+            :value="modelValue"
+            @input="updateModelValue($event.target.value)"
+            >
+            
+       
+
+    </div>
+
+    
+</template>
+
+<style scoped>
+
+</style>
